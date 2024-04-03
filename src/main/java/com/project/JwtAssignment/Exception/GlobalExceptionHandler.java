@@ -15,7 +15,12 @@ public class GlobalExceptionHandler {
         // Handle generic exceptions
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + ex.getMessage());
     }
-
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    @ResponseBody
+    public ResponseEntity<String> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        // Handle user already exists exception
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
     @ExceptionHandler({UnauthorizedAccessException.class, IllegalArgumentException.class})
     @ResponseBody
     public ResponseEntity<String> handleUnauthorizedAccessException(Exception ex) {

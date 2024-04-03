@@ -1,6 +1,7 @@
 package com.project.JwtAssignment.Service;
 
 import com.project.JwtAssignment.Entities.User;
+import com.project.JwtAssignment.Exception.UserAlreadyExistsException;
 import com.project.JwtAssignment.Model.UserDto;
 import com.project.JwtAssignment.Repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -28,7 +30,9 @@ public class UserService  {
     }
 
     public User createUser(UserDto userDto) throws Exception {
-        // Additional validation or logic can be added here before saving the user
+        Optional<User> user = findByEmail(userDto.getEmail());
+        if(user.isPresent()) throw new UserAlreadyExistsException("User already exists");
+
         try {
 
             String encryptPassword = passwordEncoder.encode(userDto.getPassword());
@@ -51,7 +55,7 @@ public class UserService  {
 
 
 
-    public User findByEmail(String email) {
-        return null;
+    public Optional<User> findByEmail(String email) {
+        return iUserRepository.findByEmail(email);
     }
 }
