@@ -2,6 +2,8 @@ package com.project.JwtAssignment.Controller;
 
 import com.project.JwtAssignment.Entities.User;
 import com.project.JwtAssignment.Model.ApiResponse;
+import com.project.JwtAssignment.Model.UserDto;
+import com.project.JwtAssignment.Model.UserResponseDto;
 import com.project.JwtAssignment.Service.ApiService;
 import com.project.JwtAssignment.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,7 @@ public class HomeController {
     private ApiService apiService;
 
     @GetMapping("/users")
-    public List<User> getUsers() {
+    public List<UserResponseDto> getUsers() {
         return userService.getAllUsers();
     }
 

@@ -71,10 +71,6 @@ public class AuthController {
             throw new BadCredentialsException(" Invalid Username or Password !!");
         }
     }
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<String> handleBadCredentialsException(BadCredentialsException ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
-    }
 
     @PostMapping("/create-user")
     public ResponseEntity<String> createUser(@RequestBody UserDto user) {
@@ -87,15 +83,5 @@ public class AuthController {
                     .body("Error creating user: " + e.getMessage());
         }
     }
-//    @PostMapping("/logout")
-//    public ResponseEntity<String> logout(HttpServletRequest request) {
-//        // Here, you can perform any additional cleanup tasks if needed
-//        // For example, you can add the token to a blacklist of revoked tokens
-//
-//        // You may also want to invalidate the session if the application is using session-based authentication
-//        request.getSession().invalidate();
-//
-//        return ResponseEntity.ok("Logout successful");
-//    }
 
 }

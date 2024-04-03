@@ -2,6 +2,7 @@ package com.project.JwtAssignment.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,10 +22,17 @@ public class GlobalExceptionHandler {
         // Handle user already exists exception
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseBody
+    public ResponseEntity<String> handleBadCredentialsException(BadCredentialsException ex) {
+        // Handle bad credentials exception
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
     @ExceptionHandler({UnauthorizedAccessException.class, IllegalArgumentException.class})
     @ResponseBody
     public ResponseEntity<String> handleUnauthorizedAccessException(Exception ex) {
         // Handle unauthorized access exceptions
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
+
 }
